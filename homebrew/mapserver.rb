@@ -10,10 +10,10 @@ class Mapserver < Formula
   depends_on 'jpeg'
 
   #we want gdal support if ogr was requested, unless gdal was explicitely disabled
-  depends_on 'gdal' if ARGV.include? '--with-ogr' or not ARGV.include? '--without-gdal'
+  depends_on 'gdal' unless ARGV.include? '--without-ogr' and ARGV.include? '--without-gdal'
 
-  depends_on 'geos' if ARGV.include? '--with-geos'
-  depends_on 'giflib' if not ARGV.build_head? or ARGV.include? '--with-gif'
+  depends_on 'geos' unless ARGV.include? '--without-geos'
+  depends_on 'giflib' if ARGV.include? '--with-gif'
   depends_on 'cairo' if ARGV.include? '--with-cairo'
 
   #postgis support enabled by default
@@ -22,8 +22,8 @@ class Mapserver < Formula
   def options
     [
       ["--with-gd", "Build support for the aging GD renderer"],
-      ["--with-ogr", "Build support for OGR vector access"],
-      ["--with-geos", "Build support for GEOS spatial operations"],
+      ["--without-ogr", "Disable support for OGR vector access"],
+      ["--without-geos", "Disable support for GEOS spatial operations"],
       ["--with-php", "Build PHP MapScript module"],
       ["--with-gif", "Enable support for gif symbols"],
       ["--with-cairo", "Enable support for cairo SVG and PDF output"],
@@ -41,11 +41,13 @@ class Mapserver < Formula
 
     args.push "--with-gd" if ARGV.include? '--with-gd'
     args.push "--with-gdal" unless ARGV.include? '--without-gdal'
+    args.push "--with-wfs" unless ARGV.include? '--without-wfs'
+    args.push "--with-wcs" unless ARGV.include? '--without-wcs' or ARGV.include? '--without-gdal'
     args.push "--without-gif" if not ARGV.include? '--with-gif'
-    args.push "--with-ogr" if ARGV.include? '--with-ogr'
-    args.push "--with-geos" if ARGV.include? '--with-geos'
+    args.push "--with-ogr" unless ARGV.include? '--without-ogr'
+    args.push "--with-geos" unless ARGV.include? '--without-geos'
     args.push "--with-cairo" if ARGV.include? '--with-cairo'
-    args.push "--with-php=/usr/include/php" if ARGV.include? '--with-php'
+    args.push "--with-php" if ARGV.include? '--with-php'
 
     unless ARGV.include? '--without-postgresql'
       if MacOS.lion? # Lion ships with PostgreSQL libs
@@ -53,6 +55,12 @@ class Mapserver < Formula
       else
         args.push "--with-postgis=#{HOMEBREW_PREFIX}/bin/pg_config"
       end
+    end
+    if args.include? '--with-wfs' and not args.include? '--with-ogr'
+       odie 'WFS support requires OGR. Either add --without-wfs or remove --without-ogr'
+    end
+    if args.include? '--with-php'
+       odie 'PHP Mapscript not yet supported'
     end
 
     args
@@ -62,7 +70,7 @@ class Mapserver < Formula
     ENV.x11
     system "./configure", *configure_args
     system "make"
-    system "make install"
+    system "make install-bin"
          
 
     if ARGV.include? '--with-php'
