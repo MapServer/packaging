@@ -13,6 +13,7 @@ class Mapserver < Formula
   depends_on 'gdal' unless ARGV.include? '--without-ogr' and ARGV.include? '--without-gdal'
 
   depends_on 'geos' unless ARGV.include? '--without-geos'
+  depends_on 'fcgi' unless ARGV.include? '--without-fastcgi'
   depends_on 'giflib' if ARGV.include? '--with-gif'
   depends_on 'cairo' if ARGV.include? '--with-cairo'
 
@@ -28,7 +29,8 @@ class Mapserver < Formula
       ["--with-gif", "Enable support for gif symbols"],
       ["--with-cairo", "Enable support for cairo SVG and PDF output"],
       ["--without-postgresql", "Disable support for PostgreSQL as a data source"],
-      ["--without-gdal", "Disable support for GDAL raster access"]
+      ["--without-gdal", "Disable support for GDAL raster access"],
+      ["--without-fastcgi", "Disable FastCGI support"]
     ]
   end
 
@@ -48,6 +50,7 @@ class Mapserver < Formula
     args.push "--with-geos" unless ARGV.include? '--without-geos'
     args.push "--with-cairo" if ARGV.include? '--with-cairo'
     args.push "--with-php" if ARGV.include? '--with-php'
+    args.push "--with-fastcgi" unless ARGV.include? '--without-fastcgi'
 
     unless ARGV.include? '--without-postgresql'
       if MacOS.lion? # Lion ships with PostgreSQL libs
@@ -59,9 +62,6 @@ class Mapserver < Formula
     if args.include? '--with-wfs' and not args.include? '--with-ogr'
        odie 'WFS support requires OGR. Either add --without-wfs or remove --without-ogr'
     end
-    if args.include? '--with-php'
-       odie 'PHP Mapscript not yet supported'
-    end
 
     args
   end
@@ -70,23 +70,26 @@ class Mapserver < Formula
     ENV.x11
     system "./configure", *configure_args
     system "make"
+    system "make PHP_EXT_DIR=#{prefix}/lib"
     system "make install-bin"
          
 
     if ARGV.include? '--with-php'
-      prefix.install %w(mapscript/php/php_mapscript.so)
+      system "make PHP_EXT_DIR=#{prefix}/lib php_mapscript_install"
     end
   end
 
   def caveats
     s = <<-EOS
-The Mapserver CGI executable is #{prefix}/mapserv
+The Mapserver CGI executable is /usr/local/bin/mapserv
+You can add it to your system apache webserver with the command:
+sudo ln -s /usr/local/bin/mapserv /Library/WebServer/CGI-Executables/mapserv
     EOS
     if ARGV.include? '--with-php'
       s << <<-EOS
-If you built the PHP option:
-  * Add the following line to php.ini:
-    extension="#{prefix}/php_mapscript.so"
+To activate PHP mapscript:
+  * Add the following line to /etc/php.ini:
+    extension="/usr/local/lib/php_mapscript.so"
   * Execute "php -m"
   * You should see MapScript in the module list
       EOS
