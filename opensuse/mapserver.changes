@@ -1,0 +1,279 @@
+-------------------------------------------------------------------
+Tue May 22 19:56:53 UTC 2012 - tzotsos@opensuse.org
+
+- Fix creation of a vector symbolObj in mapscript (#4318)
+- Added coverage metadata in WCS (#4306)
+- Adjusted WCS 2.0 GetCapbilities response (#4003)
+- Ignore unknown requets parameteres in WCS 2.0 (#4307).
+- Fixed mapscript is unusable in a web application due to memory leaks
+(#4262)
+- Fixed getFeature request with custom output format fails on filter
+encoding (#4190)
+- Fixed resolution when UoM changes in WCS 2.0 (#4283)
+- Added missing DEFRESOLUTION parameter to msCopyMap() function (#4272)
+- Fixed Python MapScript layerObj/classObj Error (#3940)
+- Fixed WCS 2.0 axis order, offset vector, and origin (#4006, #4191)
+- Fixed PHP MapScript opacity property of StyleObj no longer works (#3920)
+- Added MS_CJC_* constants in PHP/MapScript (#4183)
+- Fixed Memory leak with fribidi strings (#4188)
+- Added missing properties in styleObj setter of PHP/MapScript (#3901)
+
+-------------------------------------------------------------------
+Sun Apr 22 07:49:04 UTC 2012 - tzotsos@opensuse.org
+
+- fixed SLE_11 SP1 build
+
+-------------------------------------------------------------------
+Tue Apr 17 21:42:26 UTC 2012 - tzotsos@opensuse.org
+
+- updated to new upstream version of mapserver 6.0.2 (see
+  http://trac.osgeo.org/mapserver/browser/tags/rel-6-0-2/mapserver/HISTORY.TXT
+  for a detailed description of the changes.)
+
+-------------------------------------------------------------------
+Mon Jan 30 17:48:35 UTC 2012 - dassau@gbd-consult.de
+
+- added XTRALIBS=-ldl as configure option 
+
+-------------------------------------------------------------------
+Wed Nov 23 15:09:01 UTC 2011 - opensuse@dstoecker.de
+
+- fix build
+
+Fri Sep 30 00:00:00 UTC 2011 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- updated to new upstream version of mapserver 6.0.1 (see
+  http://trac.osgeo.org/mapserver/browser/tags/rel-6-0-1/mapserver/HISTORY.TXT
+  for a detailed description of the changes.
+
+Fri May 27 00:00:00 UTC 2011 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- included the patch from #3877 to make it build
+
+Mon May 16 00:00:00 UTC 2011 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- updated to new upstream version of mapserver 6.0.0 (see
+  http://trac.osgeo.org/mapserver/browser/tags/rel-6-0-0/mapserver/HISTORY.TXT
+  for a detailed description of the changes.
+
+Fri May 06 00:00:00 UTC 2011 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- updated with new upstream release 6.0.0-rc2
+
+Sat Apr 30 00:00:00 UTC 2011 - tzotsos@opensuse.org
+-------------------------------------------------------------------
+
+- updated with new upstream release 6.0.0-rc1.
+
+Sun Apr 24 00:00:00 UTC 2011 - tzotsos@opensuse.org
+-------------------------------------------------------------------
+
+- updated with new upstream release 6.0.0-beta7.
+
+Thu Apr 14 00:00:00 UTC 2011 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- updated with new upstream release 6.0.0-beta6.
+
+Thu Apr 07 00:00:00 UTC 2011 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- updated with new upstream release 6.0.0-beta5; in the meanwhile
+  python-support was repaired by someone else (dstoecker, adrianSuSE).
+  Kudos to them.
+
+Fri Mar 11 00:00:00 UTC 2011 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- updated with new upstream release 6.0.0-beta1
+
+Sun Feb 27 00:00:00 UTC 2011 - tzotsos@opensuse.org
+-------------------------------------------------------------------
+
+- fixed python package
+
+Mon Jan 24 00:00:00 UTC 2011 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- added bug3525_verbose_output.patch to make EXCEPTIONS-output more
+  verbose
+
+Tue Jan 18 00:00:00 UTC 2011 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- udated to new upstream version of mapserver 5.6.6(see
+  http://trac.osgeo.org/mapserver/browser/tags/rel-5-6-6/mapserver/HISTORY.TXT
+  for a detailed description of the changes.
+- removed patch for bug #3525 since this is already included in upstreams
+  version 5.6.5
+
+Tue Jan 11 00:00:00 UTC 2011 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- added upstream-patch for mapserver bug #3525 to work reliably with WMS
+  1.3.0 and FCGI-mode
+
+Mon Dec 06 00:00:00 UTC 2010 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- added --with-experimental-png-compile-flag
+
+Wed Oct 13 00:00:00 UTC 2010 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- added a patch to hide layers from GetCapabilitites-Output. Use
+  Metadataentry 'OWS_HIDDEN_LAYER' 'true' inside your layer
+- added Fastcgi-Support
+
+Tue Aug 10 00:00:00 UTC 2010 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- updated to new upstream version of mapserver 5.6.5(see
+  http://trac.osgeo.org/mapserver/browser/tags/rel-5-6-5/mapserver/HISTORY.TXT
+  for a detailed description of the changes.
+
+Fri Mar 08 00:00:00 UTC 2010 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- updated to new upstream version of mapserver 5.6.3(see
+  http://trac.osgeo.org/mapserver/browser/tags/rel-5-6-3/mapserver/HISTORY.TXT
+  for a detailed description of the changes.
+
+Mon Jan 11 00:00:00 UTC 2010 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- updated to new upstream version of mapserver 5.6.1(see
+  http://trac.osgeo.org/mapserver/browser/tags/rel-5-6-1/mapserver/HISTORY.TXT
+  for a detailed description of the changes.
+
+Wed Dec 16 00:00:00 UTC 2009 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- updated to new upstream version of mapserver 5.6.0
+ (see http://trac.osgeo.org/mapserver/browser/tags/rel-5-6-0/mapserver/HISTORY.TXT
+ for a detailed description of the changes.
+
+Wed May 06 00:00:00 UTC 2009 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- updated to new upstream version of mapserver 5.4.0
+  (see http://trac.osgeo.org/mapserver/browser/tags/rel-5-4-0/mapserver/HISTORY.TXT
+  for a detailed description of the changes.
+- This release fixes several security vulnerabilities:
+  http://trac.osgeo.org/mapserver/ticket/2939
+  http://trac.osgeo.org/mapserver/ticket/2941
+  http://trac.osgeo.org/mapserver/ticket/2942
+  http://trac.osgeo.org/mapserver/ticket/2943
+  http://trac.osgeo.org/mapserver/ticket/2944
+- tweaked the specfile for the new relase a little
+- make java using version 1.5 also for OpenSuSE 11.0
+
+Wed Dec 04 00:00:00 UTC 2008 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- updated to new upstream release of mapserver 5.2.1
+  (see http://trac.osgeo.org/mapserver/browser/tags/rel-5-2-1/mapserver/HISTORY.TXT
+  for a detailed description of the changes
+
+Wed Oct 22 00:00:00 UTC 2008 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- removed --with-tiff-option based on a hint from Andreas Hirner.
+  See http://n2.nabble.com/Re:-unable-to-read-TIF-with-mapserver-5.3dev-td738238.html
+  for more information
+
+Tue Aug 28 00:00:00 UTC 2008 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- changed path of mapscript-module
+- added dependency of apache2_mod-php5 to php-mapserver
+
+Tue Aug 26 00:00:00 UTC 2008 - stephan.holl@intevation.de
+-------------------------------------------------------------------
+
+- updated to build on SLE_10 x32-plattforms
+- updated path to php_mapscript.so
+- updated path to mapserv
+- added legend, scalebar
+* Sun Mar 16 2008 Otto Dassau 5.0.2
+- adapted to compile on openSUSE build service
+- java and python is not build included
+
+Tue Feb 19 00:00:00 UTC 2008 - rel-eng@fedoraproject.org
+-------------------------------------------------------------------
+
+- Autorebuild for GCC 4.3
+
+Sat Feb 9 00:00:00 UTC 2008 - devrim@commandprompt.com
+-------------------------------------------------------------------
+
+- Update to 5.0.2
+
+Sat Jan 5 00:00:00 UTC 2008 - devrim@commandprompt.com
+-------------------------------------------------------------------
+
+- Update BR for java-devel, per Patrice Dumas
+
+Fri Jan 4 00:00:00 UTC 2008 - devrim@commandprompt.com
+-------------------------------------------------------------------
+
+- Update to 5.0.0
+- Removed patch0, since it is already in upstream.
+- Updated BRs
+
+Thu Dec 06 00:00:00 UTC 2007 - rel-eng@fedoraproject.org
+-------------------------------------------------------------------
+
+- Rebuild for deps
+
+Thu Aug 30 00:00:00 UTC 2007 - oliver@linux-kernel.at
+-------------------------------------------------------------------
+
+- Add fix to include libmapserver (in some places), instead of
+  libmap, that doesn't exist (anymore)
+
+Thu Aug 30 00:00:00 UTC 2007 - oliver@linux-kernel.at
+-------------------------------------------------------------------
+
+- Update to fix bz#256561, CVE-2007-4542
+
+Fri May 11 00:00:00 UTC 2007 - cbalint@redhat.com
+-------------------------------------------------------------------
+
+- update require list properly.
+
+Thu May 10 00:00:00 UTC 2007 - cbalint@redhat.com
+-------------------------------------------------------------------
+
+- use macros if possible in spec
+
+Thu May 10 00:00:00 UTC 2007 - cbalint@redhat.com
+-------------------------------------------------------------------
+
+- further fixups for inclusion
+
+Thu May 10 00:00:00 UTC 2007 - cbalint@redhat.com
+-------------------------------------------------------------------
+
+- new upsream tarball (bugfix)
+- further fixups for inclusion
+
+Tue Apr 24 00:00:00 UTC 2007 - cbalint@redhat.com
+-------------------------------------------------------------------
+
+- further fixups for inclusion
+- enable java
+
+Fri Mar 16 00:00:00 UTC 2007 - cbalint@redhat.com
+-------------------------------------------------------------------
+
+- add docs
+
+Fri Mar 16 00:00:00 UTC 2007 - cbalint@redhat.com
+-------------------------------------------------------------------
+
+- first package

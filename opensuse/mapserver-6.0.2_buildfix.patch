@@ -1,0 +1,15 @@
+diff -ur mapserver-6.0.1/mapogr.cpp mapserver-6.0.1f/mapogr.cpp
+--- mapserver-6.0.1/mapogr.cpp	2011-07-12 15:06:14.000000000 +0200
++++ mapserver-6.0.1f/mapogr.cpp	2011-11-23 16:06:53.000000000 +0100
+@@ -3719,9 +3719,9 @@
+ 
+   msSetError(MS_MISCERR, "OGR support is not available.", 
+              "msOGREscapeSQLParam()");
+-  return NULL;
+-
+ #endif /* USE_OGR */  
++
++  return NULL;
+ }
+ 
+ 
