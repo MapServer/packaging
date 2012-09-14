@@ -18,7 +18,7 @@ Here is an alphabetically ordered list of packaging support known of.
 CentOS
 ======
 
-See directory "centos"
+See directory [centos](centos)
 
 Debian/Ubuntu
 =============
@@ -29,7 +29,7 @@ Packaging for Debian and Ubuntu is [maintained externally]
 Enterprise Linux
 ================
 
-See directory "el"
+See directory [el](el)
 
 Homebrew support
 ================
@@ -47,5 +47,5 @@ The MS4W packaging for Windows is [maintained externally]
 openSUSE
 ========
 
-See directory "opensuse" or [externally]
+See directory [opensuse](opensuse) or [externally]
 (https://build.opensuse.org/package/files?package=mapserver&project=Application:Geo)
