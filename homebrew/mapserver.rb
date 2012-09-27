@@ -40,12 +40,12 @@ end
 
 class Mapserver < Formula
   homepage 'http://mapserver.org/'
-  url 'http://download.osgeo.org/mapserver/mapserver-6.2.0-beta3.tar.gz'
-  md5 '04c60741237b71bd088412864df843e3'
+  url 'http://download.osgeo.org/mapserver/mapserver-6.2.0-beta4.tar.gz'
+  md5 'b0abf53b22c6d7a7d62bbadd997307a6'
   head 'https://github.com/mapserver/mapserver.git'
   devel do
-    url 'http://download.osgeo.org/mapserver/mapserver-6.2.0-beta3.tar.gz'
-    md5 '04c60741237b71bd088412864df843e3'
+    url 'http://download.osgeo.org/mapserver/mapserver-6.2.0-beta4.tar.gz'
+    md5 'b0abf53b22c6d7a7d62bbadd997307a6'
   end
 
   depends_on 'jpeg'
