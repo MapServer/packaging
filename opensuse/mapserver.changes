@@ -1,4 +1,35 @@
 -------------------------------------------------------------------
+Fri Oct 12 16:58:00 UTC 2012 - tzotsos@opensuse.org
+
+- Update to v6.2rc1
+
+-------------------------------------------------------------------
+Thu Sep 27 21:20:46 UTC 2012 - tzotsos@opensuse.org
+
+- Update to v6.2beta4
+
+-------------------------------------------------------------------
+Thu Sep  6 18:41:56 UTC 2012 - tzotsos@opensuse.org
+
+- Update to v6.2beta3
+
+-------------------------------------------------------------------
+Sat Jul  7 18:05:14 UTC 2012 - tzotsos@opensuse.org
+
+- Update to v6.2beta1
+
+-------------------------------------------------------------------
+Tue Jun 26 12:17:45 UTC 2012 - tzotsos@opensuse.org
+
+- Enabled Python
+
+-------------------------------------------------------------------
+Fri Jun 22 14:20:04 UTC 2012 - tzotsos@opensuse.org
+
+- testing 6.1.dev version
+TODO: Add support for Python, Perl, Java
+
+-------------------------------------------------------------------
 Tue May 22 19:56:53 UTC 2012 - tzotsos@opensuse.org
 
 - Fix creation of a vector symbolObj in mapscript (#4318)
