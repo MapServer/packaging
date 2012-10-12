@@ -3,19 +3,37 @@ Name:           mapserver
 Version:        6.2.rc1
 Release:        1
 License:        BSD
-Group:          Applications/GIS
+Group:          Productivity/Scientific/Other
 Source:         %{name}-%{fileversion}.tar.gz
 Url:            http://www.mapserver.org
 Summary:        Environment for building spatially-enabled internet applications
-Requires:       php postgresql mysql FastCGI python apache2
+Requires:       php 
+Requires:       postgresql 
+Requires:       mysql 
+Requires:       FastCGI 
+Requires:       python 
+Requires:       apache2
 %if 0%{?suse_version} != 1010
 BuildRequires:  xorg-x11-libXpm-devel
 %endif
-BuildRequires:  rpm gcc gcc-c++ pam
-BuildRequires:  pam-devel postgresql-devel libexpat-devel 
-BuildRequires:  mysql-devel giflib-devel libgeos-devel libproj-devel
-BuildRequires:  libgdal-devel readline-devel freetype2-devel 
-BuildRequires:  FastCGI-devel python-devel fribidi-devel cairo-devel
+BuildRequires:  rpm 
+BuildRequires:  gcc 
+BuildRequires:  gcc-c++ 
+BuildRequires:  pam
+BuildRequires:  pam-devel 
+BuildRequires:  postgresql-devel 
+BuildRequires:  libexpat-devel 
+BuildRequires:  mysql-devel 
+BuildRequires:  giflib-devel 
+BuildRequires:  libgeos-devel 
+BuildRequires:  libproj-devel
+BuildRequires:  libgdal-devel 
+BuildRequires:  readline-devel 
+BuildRequires:  freetype2-devel 
+BuildRequires:  FastCGI-devel 
+BuildRequires:  python-devel 
+BuildRequires:  fribidi-devel 
+BuildRequires:  cairo-devel
 BuildRequires:  gd-devel >= 2.0.16
 %if 0%{?suse_version} >= 1030
 BuildRequires:  libcurl-devel
@@ -27,10 +45,16 @@ BuildRequires:  php5-devel
 %if 0%{?suse_version} >= 1120
 BuildRequires:  krb5-devel
 %endif
-BuildRequires:  zlib-devel libxml2-devel libxslt-devel 
-BuildRequires:  libjpeg-devel libpng-devel libtiff-devel
+BuildRequires:  zlib-devel 
+BuildRequires:  libxml2-devel 
+BuildRequires:  libxslt-devel 
+BuildRequires:  libjpeg-devel 
+BuildRequires:  libpng-devel 
+BuildRequires:  libtiff-devel
 BuildRequires:  perl(ExtUtils::MakeMaker)
-BuildRequires:  swig update-alternatives apache2-devel
+BuildRequires:  swig 
+BuildRequires:  update-alternatives 
+BuildRequires:  apache2-devel
 %if 0%{?sles_version}
 BuildRequires:  java-devel <= 1.5
 BuildRequires:  java <= 1.5
@@ -139,14 +163,16 @@ within the Java programming language.
 # using %{?_smp_mflags} may break build
 
 make
+# temporary hack!
+make mapscriptvars
 #sed -i -e "s;libdir='%{_libdir}';libdir='%{buildroot}%{_libdir}';" libmapserver.la
 #sed -i -e "s;libdir='%{python_sitearch}';libdir='%{buildroot}%{python_sitearch}';" mapscript/python/_mapscript.la
 #sed -i -e "s;libdir='/usr/lib64/php/modules';libdir='%{buildroot}/usr/lib64/php/modules';" mapscript/php/php_mapscript.la
 
 ## build perl
-#cd mapscript/perl
-#perl Makefile.PL
-#make
+cd mapscript/perl
+perl Makefile.PL
+make
 
 ## build python
 #cd ../python
@@ -154,11 +180,11 @@ make
 
 # build java
 #touch ../mapscript.i
-#cd ../java
+cd ../java
 #JAVA_HOME=%{java_home} make
 #sed -i -e "s;libdir='%{_libdir}';libdir='%{buildroot}%{_libdir}';" libjavamapscript.la
 #make interface
-#make
+make
 
 %install
 rm -rf %{buildroot}
@@ -185,9 +211,9 @@ cp %{buildroot}%{_bindir}/scalebar %{buildroot}%{_cgibindir}/scalebar
 
 
 # install perl module
-#pushd mapscript/perl
-#make DESTDIR=%{buildroot} pure_vendor_install
-#popd
+pushd mapscript/perl
+make DESTDIR=%{buildroot} pure_vendor_install
+popd
 
 # install python module
 #pushd mapscript/python
@@ -200,8 +226,8 @@ cp %{buildroot}%{_bindir}/scalebar %{buildroot}%{_cgibindir}/scalebar
 #popd
 
 # install java
-#mkdir -p %{buildroot}%{_javadir}
-#install -p -m 644 mapscript/java/mapscript.jar %{buildroot}%{_javadir}/
+mkdir -p %{buildroot}%{_javadir}
+install -p -m 644 mapscript/java/mapscript.jar %{buildroot}%{_javadir}/
 
 # install php config file
 mkdir -p %{buildroot}%{_sysconfdir}/php5/conf.d/
@@ -218,7 +244,7 @@ done
 rm -rf %{buildroot}%{_docdir}/%{name}-%{version}/tests/vera
 
 # fix some exec bits
-#chmod 755 %{buildroot}%{perl_vendorarch}/auto/mapscript/mapscript.so
+chmod 755 %{buildroot}%{perl_vendorarch}/auto/mapscript/mapscript.so
 
 %clean
 rm -rf %{buildroot}
@@ -258,12 +284,12 @@ rm -rf %{buildroot}
 %{_libdir}/php5/extensions/php_mapscript.so.0
 %{_libdir}/php5/extensions/php_mapscript.so.0.0.0
 
-#%files perl
-#%defattr(-,root,root)
-#%doc mapscript/perl/examples
-#%dir %{perl_vendorarch}/auto/mapscript
-#%{perl_vendorarch}/auto/mapscript/*
-#%{perl_vendorarch}/mapscript.pm
+%files perl
+%defattr(-,root,root)
+%doc mapscript/perl/examples
+%dir %{perl_vendorarch}/auto/mapscript
+%{perl_vendorarch}/auto/mapscript/*
+%{perl_vendorarch}/mapscript.pm
 
 %files python
 %defattr(-,root,root)
@@ -272,11 +298,11 @@ rm -rf %{buildroot}
 %doc mapscript/python/tests
 %{python_sitearch}/*
 
-#%files java
-#%defattr(-,root,root)
-#%doc mapscript/java/README
-#%doc mapscript/java/examples
-#%doc mapscript/java/tests
-#%{_javadir}/*.jar
+%files java
+%defattr(-,root,root)
+%doc mapscript/java/README
+%doc mapscript/java/examples
+%doc mapscript/java/tests
+%{_javadir}/*.jar
 
 %changelog
