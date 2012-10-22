@@ -1,12 +1,12 @@
 Name:           mapserver
 Version:        6.2.0
-Release:        0.beta3%{?dist}
+Release:        0.rc1%{?dist}
 Summary:        Environment for building spatially-enabled internet applications
 Group:          Development/Tools
 License:        BSD
 URL:            http://mapserver.gis.umn.edu
 #Source:         http://download.osgeo.org/mapserver/mapserver-%{version}.tar.gz
-Source:         http://download.osgeo.org/mapserver/mapserver-6.2.0-beta3.tar.gz
+Source:         http://download.osgeo.org/mapserver/mapserver-6.2.0-rc1.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires:       httpd
 # Requires:       bitstream-vera-sans-fonts
@@ -71,18 +71,11 @@ The Java/Mapscript extension provides full map customization capabilities
 within the Java programming language.
 
 %prep
-%setup -q -n mapserver-6.2.0-beta3
+%setup -q -n mapserver-6.2.0-rc1
 # %setup -q
 # fix spurious perm bits
-chmod -x tests/home.png
-chmod -x mapscript/php/php_mapscript.c
-chmod -x mappluginlayer.c
-chmod -x mapscript/php/mapscript_i.c
-chmod -x mapscript/php/examples/test_writeshape.phtml
-chmod -x mapscript/python/examples/*.py
 chmod -x mapscript/python/tests/rundoctests.dist
 chmod -x mapscript/perl/examples/*.pl
-chmod -x mapscript/php/README
 
 
 # remove fonts
@@ -98,12 +91,6 @@ popd
 
 CFLAGS="${CFLAGS} -ldl" ; export CFLAGS
 
-# fix a UTF-8 one
-iconv -f ISO-8859-1 -t UTF-8 < \
-mapscript/java/examples/QueryByAttributeUnicode.java > \
-mapscript/java/examples/QueryByAttributeUnicode-tmp.java
-mv -f mapscript/java/examples/QueryByAttributeUnicode-tmp.java \
-mapscript/java/examples/QueryByAttributeUnicode.java
 
 # fix gdal lookup
 %{__sed} -i.libs -e 's|`\$GDAL_CONFIG --dep-libs`||' configure
