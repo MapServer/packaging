@@ -1,6 +1,6 @@
 Name:           mapserver
-%define fileversion 6.2.0-rc1
-Version:        6.2.rc1
+%define fileversion 6.2.0
+Version:        6.2.0
 Release:        1
 License:        BSD
 Group:          Productivity/Scientific/Other
