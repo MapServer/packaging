@@ -1,12 +1,11 @@
 Name:           mapserver
 Version:        6.2.0
-Release:        0.rc1%{?dist}
+Release:        0%{?dist}
 Summary:        Environment for building spatially-enabled internet applications
 Group:          Development/Tools
 License:        BSD
 URL:            http://mapserver.gis.umn.edu
-#Source:         http://download.osgeo.org/mapserver/mapserver-%{version}.tar.gz
-Source:         http://download.osgeo.org/mapserver/mapserver-6.2.0-rc1.tar.gz
+Source:         http://download.osgeo.org/mapserver/mapserver-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires:       httpd
 # Requires:       bitstream-vera-sans-fonts
@@ -71,7 +70,7 @@ The Java/Mapscript extension provides full map customization capabilities
 within the Java programming language.
 
 %prep
-%setup -q -n mapserver-6.2.0-rc1
+%setup -q -n mapserver-%{version}
 # %setup -q
 # fix spurious perm bits
 chmod -x mapscript/python/tests/rundoctests.dist
