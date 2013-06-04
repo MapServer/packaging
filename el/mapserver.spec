@@ -19,7 +19,7 @@ BuildRequires:  geos-devel proj-devel gdal-devel cairo-devel
 BuildRequires:  php-devel freetype-devel gd-devel >= 2.0.16
 BuildRequires:  python-devel curl-devel zlib-devel libxml2-devel
 BuildRequires:  libjpeg-devel libpng-devel fribidi-devel giflib-devel
-
+BuildRequires:  librsvg2.x86_64 cairo.x86_64 cairo-devel.x86_64
 
 %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")
 
@@ -124,6 +124,7 @@ CFLAGS="${CFLAGS} -ldl" ; export CFLAGS
    --enable-python-mapscript \
    --with-kml=yes \
    --with-xml-mapfile=yes \
+   --with-libsvg-cairo=%{_libdir}/pkgconfig/cairo.pc \
    --enable-debug
 
 # disable pgport library lookup.
