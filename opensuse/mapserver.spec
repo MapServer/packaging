@@ -1,8 +1,8 @@
 Name:           mapserver
-%define fileversion 6.2.0
-Version:        6.2.0
+%define fileversion 6.4.0
+Version:        6.4.0
 Release:        1
-License:        BSD
+License:        BSD-3-Clause
 Group:          Productivity/Scientific/Other
 Source:         %{name}-%{fileversion}.tar.gz
 Url:            http://www.mapserver.org
@@ -18,7 +18,9 @@ BuildRequires:  xorg-x11-libXpm-devel
 %endif
 BuildRequires:  rpm 
 BuildRequires:  gcc 
-BuildRequires:  gcc-c++ 
+BuildRequires:  gcc-c++
+BuildRequires:  autoconf
+BuildRequires:  cmake >= 2.4 
 BuildRequires:  pam
 BuildRequires:  pam-devel 
 BuildRequires:  postgresql-devel 
@@ -27,7 +29,8 @@ BuildRequires:  mysql-devel
 BuildRequires:  giflib-devel 
 BuildRequires:  libgeos-devel 
 BuildRequires:  libproj-devel
-BuildRequires:  libgdal-devel 
+BuildRequires:  libgdal-devel
+BuildRequires:  openjpeg2-devel
 BuildRequires:  readline-devel 
 BuildRequires:  freetype2-devel 
 BuildRequires:  FastCGI-devel 
@@ -82,7 +85,7 @@ custom GIS data.
 
 %package -n php-mapserver
 Summary:        PHP/Mapscript map making extensions to PHP
-Group:          Development/Languages
+Group:          Development/Languages/PHP
 Requires:       php-gd
 Requires:       apache2
 Requires:       apache2-mod_php5
@@ -92,7 +95,7 @@ The PHP/Mapscript extension provides full map customization capabilities within 
 
 %package perl
 Summary:        Perl/Mapscript map making extensions to Perl
-Group:          Development/Languages
+Group:          Development/Languages/Perl
 Requires:       %{name} = %{version}-%{release}
 Requires:       perl-base
 
@@ -102,7 +105,7 @@ within the Perl programming language.
 
 %package python
 Summary:        Python/Mapscript map making extensions to Python
-Group:          Development/Languages
+Group:          Development/Languages/Python
 Requires:       %{name} = %{version}-%{release}
 Requires:       python-base
 
@@ -112,79 +115,67 @@ within the Python programming language.
 
 %package java
 Summary:        Java/Mapscript map making extensions to Java
-Group:          Development/Languages
+Group:          Development/Languages/Java
 Requires:       %{name} = %{version}-%{release}
 
 %description java
 The Java/Mapscript extension provides full map customization capabilities
 within the Java programming language.
 
+%package	devel
+Summary:        Mapserver development files
+Group:          Development/Libraries/Other
+Requires:       %{name} = %{version}-%{release}
+
+%description	devel
+The Mapserver development package provides necessary files to build
+against the C Mapserver library.
+
 %prep
 %setup -q -n %{name}-%{fileversion}
 
 %build -n %{name}-%{fileversion}
-%configure XTRALIBS=-ldl \
-   --with-gd \
-   --with-zlib \
-   --with-freetype=%{_bindir}/freetype-config \
-   --with-fribidi-config \
-   --with-gdal=%{_bindir}/gdal-config \
-   --with-ogr=%{_bindir}/gdal-config \
-   --with-geos=%{_bindir}/geos-config \
-   --with-proj \
-   --with-sos \
-   --with-wms \
-   --with-wfs \
-   --with-wcs \
-   --with-wmsclient \
-   --with-wfsclient \
-   --with-xpm \
-   --with-png \
-   --with-cairo \
-   --with-postgis=%{_bindir}/pg_config \
-   --with-mygis=%{_bindir}/mysql_config \
-   --with-curl-config=%{_bindir}/curl-config \
-   --with-xml2-config=%{_bindir}/xml2-config \
-   --with-xslt-config=%{_bindir}/xslt-config \
-   --with-php=%{_bindir}/php-config \
-   --with-httpd=/usr/sbin/httpd2 \
-   --with-fastcgi=/usr \
-   --with-agg-svg-symbols=yes \
-   --with-expat=/usr \
-   --with-kml=yes \
-   --with-xml-mapfile \
-   --without-pdf \
-   --without-eppl \
-   --with-threads \
-   --enable-python-mapscript \
-   --disable-runpath
+
+cd ..
+mkdir temp
+cd temp
+
+cmake -D CMAKE_INSTALL_PREFIX=%{_prefix} \
+      -D CMAKE_PREFIX_PATH="%{_includedir}/fastcgi;%{_includedir}/pgsql" \
+      -D CMAKE_BUILD_TYPE="Release" \
+      -D WITH_CAIRO=TRUE \
+      -D WITH_CLIENT_WFS=TRUE \
+      -D WITH_CLIENT_WMS=TRUE \
+      -D WITH_CURL=TRUE \
+      -D WITH_FCGI=TRUE \
+      -D WITH_FRIBIDI=TRUE \
+      -D WITH_GD=TRUE \
+      -D WITH_GDAL=TRUE \
+      -D WITH_GEOS=TRUE \
+      -D WITH_GIF=TRUE \
+      -D WITH_ICONV=TRUE \
+      -D WITH_JAVA=TRUE \
+      -D WITH_KML=TRUE \
+      -D WITH_LIBXML2=TRUE \
+      -D WITH_OGR=TRUE \
+      -D WITH_MYSQL=TRUE \
+      -D WITH_PERL=TRUE \
+      -D CUSTOM_PERL_SITE_ARCH_DIR="%{perl_vendorarch}" \
+      -D WITH_PHP=TRUE \
+      -D WITH_POSTGIS=TRUE \
+      -D WITH_PROJ=TRUE \
+      -D WITH_PYTHON=TRUE \
+      -D WITH_SOS=TRUE \
+      -D WITH_THREAD_SAFETY=TRUE \
+      -D WITH_WCS=TRUE \
+      -D WITH_WMS=TRUE \
+      -D WITH_WFS=TRUE \
+      -D WITH_XMLMAPFILE=TRUE ../%{name}-%{fileversion}/
 
 ## WARNING !!!
 # using %{?_smp_mflags} may break build
 
-make
-# temporary hack!
-make mapscriptvars
-#sed -i -e "s;libdir='%{_libdir}';libdir='%{buildroot}%{_libdir}';" libmapserver.la
-#sed -i -e "s;libdir='%{python_sitearch}';libdir='%{buildroot}%{python_sitearch}';" mapscript/python/_mapscript.la
-#sed -i -e "s;libdir='/usr/lib64/php/modules';libdir='%{buildroot}/usr/lib64/php/modules';" mapscript/php/php_mapscript.la
-
-## build perl
-cd mapscript/perl
-perl Makefile.PL
-make
-
-## build python
-#cd ../python
-#python setup.py build
-
-# build java
-#touch ../mapscript.i
-cd ../java
-#JAVA_HOME=%{java_home} make
-#sed -i -e "s;libdir='%{_libdir}';libdir='%{buildroot}%{_libdir}';" libjavamapscript.la
-#make interface
-make
+make %{?jobs:-j%{jobs}}
 
 %install
 rm -rf %{buildroot}
@@ -195,39 +186,30 @@ mkdir -p %{buildroot}/%{_sysconfdir}/php.d
 mkdir -p %{buildroot}%{_libdir}/php5/extensions
 mkdir -p %{buildroot}/%{_bindir}
 mkdir -p %{buildroot}%{python_sitearch}/
+mkdir -p %{buildroot}/%{_includedir}/mapserver
+cp *.h %{buildroot}/%{_includedir}/mapserver/
 
-make DESTDIR=%{buildroot} install
-
+cd ../temp
+%makeinstall
+cd ../%{name}-%{fileversion}
+ 
 cp %{buildroot}%{_bindir}/mapserv %{buildroot}%{_cgibindir}/mapserv
 cp %{buildroot}%{_bindir}/legend %{buildroot}%{_cgibindir}/legend
 cp %{buildroot}%{_bindir}/scalebar %{buildroot}%{_cgibindir}/scalebar
-#install -p -m 755 shp2img %{buildroot}%{_bindir}
-#install -p -m 755 shptree %{buildroot}%{_bindir}
-#install -p -m 755 sortshp %{buildroot}%{_bindir}
-#install -p -m 755 tile4ms %{buildroot}%{_bindir}
 
-#install -p -m 755 mapscript/php/.libs/php_mapscript.so %{buildroot}/%{_libdir}/php5/extensions/
+%ifarch x86_64
+mv %{buildroot}/usr/lib/*.so* %{buildroot}%{_libdir}/
+%endif
 
-
-
-# install perl module
-pushd mapscript/perl
-make DESTDIR=%{buildroot} pure_vendor_install
-popd
-
-# install python module
-#pushd mapscript/python
-
-#python setup.py install --root %{buildroot}
-#mv %{buildroot}/usr/local/%{_lib}/python%py_ver/site-packages/*mapscript* %{buildroot}/usr/%{_lib}/python%py_ver/site-packages/
-#%if 0%{?suse_version} > 1110 || 0%{?sles_version} > 10
-#    mv %{buildroot}/usr/local/%{_lib}/python%py_ver/site-packages/MapScript* %{buildroot}/usr/%{_lib}/python%py_ver/site-packages/
-#%endif
-#popd
-
-# install java
-mkdir -p %{buildroot}%{_javadir}
-install -p -m 644 mapscript/java/mapscript.jar %{buildroot}%{_javadir}/
+# # install perl module
+# pushd mapscript/perl
+# make DESTDIR=%{buildroot} pure_vendor_install
+# popd
+#
+ 
+# # install java
+# mkdir -p %{buildroot}%{_javadir}
+# install -p -m 644 mapscript/java/mapscript.jar %{buildroot}%{_javadir}/
 
 # install php config file
 mkdir -p %{buildroot}%{_sysconfdir}/php5/conf.d/
@@ -236,23 +218,28 @@ cat > %{buildroot}%{_sysconfdir}/php5/conf.d/%{name}.ini <<EOF
 extension=php_mapscript.so
 EOF
 
-# cleanup junks
-for junk in {*.pod,*.bs,.packlist} ; do
-find %{buildroot} -name "$junk" -exec rm -rf '{}' \;
-done
+# # cleanup junks
+# for junk in {*.pod,*.bs,.packlist} ; do
+# find %{buildroot} -name "$junk" -exec rm -rf '{}' \;
+# done
+
 # remove vera fonts, these are provided system wide
 rm -rf %{buildroot}%{_docdir}/%{name}-%{version}/tests/vera
 
-# fix some exec bits
-chmod 755 %{buildroot}%{perl_vendorarch}/auto/mapscript/mapscript.so
+# # fix some exec bits
+# chmod 755 %{buildroot}%{perl_vendorarch}/auto/mapscript/mapscript.so
 
 %clean
 rm -rf %{buildroot}
 
+%post   -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
+
 %files
 %defattr(-,root,root)
-%doc README README.CONFIGURE README.WIN32 COMMITERS GD-COPYING HISTORY.TXT  
-%doc INSTALL MIGRATION_GUIDE.txt
+%doc README COMMITERS GD-COPYING HISTORY.TXT  
+%doc MIGRATION_GUIDE.txt
 %doc symbols tests
 %doc fonts
 %{_bindir}/shp2img
@@ -262,27 +249,20 @@ rm -rf %{buildroot}
 %{_bindir}/mapserv
 %{_bindir}/legend
 %{_bindir}/scalebar
-%{_bindir}/mapserver-config
 %{_bindir}/msencrypt
 %{_bindir}/shptreetst
 %{_bindir}/shptreevis
 %{_cgibindir}/mapserv
 %{_cgibindir}/legend
 %{_cgibindir}/scalebar
-%{_libdir}/libmapserver-6.*.so
-%{_libdir}/libmapserver.la
-%{_libdir}/libmapserver.so
+%{_libdir}/*.so.*
 
 %files -n php-mapserver
 %defattr(-,root,root)
 %doc mapscript/php/README
-%doc mapscript/php/README.WIN32
 %doc mapscript/php/examples
 %config(noreplace) %{_sysconfdir}/php5/conf.d/%{name}.ini
 %{_libdir}/php5/extensions/php_mapscript.so
-%{_libdir}/php5/extensions/php_mapscript.la
-%{_libdir}/php5/extensions/php_mapscript.so.0
-%{_libdir}/php5/extensions/php_mapscript.so.0.0.0
 
 %files perl
 %defattr(-,root,root)
@@ -303,6 +283,13 @@ rm -rf %{buildroot}
 %doc mapscript/java/README
 %doc mapscript/java/examples
 %doc mapscript/java/tests
-%{_javadir}/*.jar
+#%{_javadir}/*.jar
+
+%files devel
+%defattr(-,root,root)
+%dir %{_includedir}/mapserver
+%{_includedir}/mapserver/*
+%{_libdir}/libmapserver.so
+%{_libdir}/libjavamapscript.so
 
 %changelog
