@@ -8,7 +8,7 @@ On a brand new CentOS 7 installation including EPEL repository:
     yum -y install git rpm-build rpmdevtools yum-utils
     rpmdev-setuptree
     git clone https://github.com/mapserver/packaging.git
-    cd packagin/centos
+    cd packaging/centos
     spectool -g -C ~/rpmbuild/SOURCES mapserver.spec
     yum-builddep -y mapserver.spec
     rpmbuild -ba --target x86_64 mapserver.spec
