@@ -21,7 +21,7 @@ BuildRequires:  libXpm-devel readline-devel librsvg2-devel
 BuildRequires:  httpd-devel php-devel libxslt-devel pam-devel fcgi-devel
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  postgresql-devel mysql-devel
-BuildRequires:  swig > 1.3.24
+BuildRequires:  swig > 1.3.24 java-1.7.0-openjdk-devel
 BuildRequires:  geos-devel proj-devel gdal-devel cairo-devel
 BuildRequires:  freetype-devel gd-devel >= 2.0.16
 BuildRequires:  python-devel curl-devel zlib-devel libxml2-devel
@@ -66,6 +66,15 @@ Requires:       %{name} = %{version}-%{release}
 The Python/Mapscript extension provides full map customization capabilities
 within the Python programming language.
 
+%package java
+Summary:        Java/Mapscript map making extensions to Java
+Group:          Development/Languages
+Requires:       %{name} = %{version}-%{release}
+
+%description java
+The Java/Mapscript extension provides full map customization capabilities
+within the Java programming language.
+
 %prep
 %setup -q -n mapserver-%{version}
 
@@ -93,6 +102,7 @@ pushd build
        -DWITH_PHP=ON \
        -DWITH_PYTHON=ON \
        -DWITH_PERL=ON \
+       -DWITH_JAVA=ON \
        -DWITH_POSTGIS=ON \
        -DWITH_OGR=ON \
        -DWITH_PROJ=ON \
@@ -189,4 +199,11 @@ mv  %{buildroot}/usr/local/lib64/perl5/* %{buildroot}%{perl_vendorarch}
 %doc mapscript/python/examples
 %doc mapscript/python/tests
 %{python_sitearch}/*
+
+%files java
+%defattr(-,root,root)
+%doc mapscript/java/README
+%doc mapscript/java/examples
+%doc mapscript/java/tests
+%{_libdir}/libjavamapscript.so
 
