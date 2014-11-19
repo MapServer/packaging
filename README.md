@@ -15,11 +15,6 @@ configuration shipped within distributions.
 
 Here is an alphabetically ordered list of packaging support known of.
 
-CentOS
-======
-
-See directory [centos](centos)
-
 Debian/Ubuntu
 =============
 
