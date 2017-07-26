@@ -16,7 +16,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires:       httpd
 Requires:       dejavu-sans-fonts
 
-BuildRequires:  cmake 
+BuildRequires:  cmake  gcc gcc-c++
 BuildRequires:  libXpm-devel readline-devel librsvg2-devel
 BuildRequires:  httpd-devel php-devel libxslt-devel pam-devel fcgi-devel
 BuildRequires:  perl(ExtUtils::MakeMaker)
