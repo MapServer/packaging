@@ -31,5 +31,5 @@ On a brand new "Enterprise Linux" installation (tested with official Dockerimage
     cd packaging/el/
     spectool -g -C ~/rpmbuild/SOURCES mapserver-7.0.spec
     yum-builddep -y mapserver-7.0.spec
-    QA_RPATHS=0x0001 pmbuild -ba --target x86_64 mapserver-7.0.spec
+    QA_RPATHS=$[ 0x0001|0x0002 ] rpmbuild -ba --target x86_64 mapserver-7.0.spec
 
